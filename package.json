@@ -1,0 +1,16 @@
+{
+  "name": "system-pulse-app",
+  "version": "1.0.0",
+  "description": "A creative system health dashboard for CI/CD deployment",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
