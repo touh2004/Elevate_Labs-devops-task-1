@@ -18,7 +18,9 @@ jobs:
 
     # 3. Install the required packages
     - name: Install Dependencies
-      run: npm install
+      run: |
+        rm -rf node_modules package-lock.json
+        npm install
 
     # 4. Run the real unit test we created earlier
     - name: Run Tests
