@@ -8,6 +8,7 @@ jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
 
+    steps:
     # 1. Grab your code from the repository
     - name: Checkout Code
       uses: actions/checkout@v4
@@ -15,12 +16,12 @@ jobs:
     # 2. Set up the Node.js environment
     - name: Setup Node.js
       uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
     # 3. Install the required packages
     - name: Install Dependencies
-      run: |
-        rm -rf node_modules package-lock.json
-        npm install
+      run: npm install
 
     # 4. Run the real unit test we created earlier
     - name: Run Tests
