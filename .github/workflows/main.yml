@@ -1,0 +1,43 @@
+name: CI/CD Pipeline for System Pulse
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Grab your code from the repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # 2. Set up the Node.js environment
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    # 3. Install the required packages
+    - name: Install Dependencies
+      run: npm install
+
+    # 4. Run the real unit test we created earlier
+    - name: Run Tests
+      run: npm test
+
+    # 5. Log in to DockerHub using your secure secrets
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # 6. Build the Docker image and push it to your DockerHub account
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/system-pulse-app:latest
